@@ -1,0 +1,58 @@
+﻿@model IList<Contato>
+@{
+    ViewData["Title"] = "Contatos";
+}
+
+@if (TempData["MSG_S"] != null)
+{
+    <p class="alert alert-success">@TempData["MSG_S"]<a class="close close-alert">x</a></p>
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="row m-auto">
+        <table class="table-responsive-md
+           table table-hover table-responsive m-auto
+           p-0 p-md-2 p-lg-4
+           col-12 col-md-10 col-lg-8
+           offset-md-3 offset-lg-2 ">
+            <thead>
+                <tr>
+
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Sobre Nome</th>
+                    <th>Celular</th>
+                    <th>E-mail</th>
+                    <th><a class="btn btn-primary btn-sm" asp-action="Cadastro" asp-controller="Contato">Novo Contato</a></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="cursor:pointer">
+
+                        <th name="contato.Id">@item.Id</th>
+                        <td name="contato.Nome">@item.Nome</td>
+                        <td>@item.SobreNome</td>
+                        <td>@item.Celular</td>
+                        <td>@item.Email</td>
+                        <td class="d-inline-flex">
+
+                            <a class="btn btn-primary btn-sm d-flex mr-1" href="@Url.Action("Edicao", "Contato", item)">Editar</a>
+                            <button class="btn btn-danger btn-sm d-flex excluir-contato" contato-id="@item.Id">Excluir</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info row">
+        <div class="col">Nenhum Registro encontrado... </div>
+        <a class="col-3 btn btn-primary float-right" asp-action="Cadastro" asp-controller="Contato">Novo Contato</a>
+    </div>
+}
